@@ -1,0 +1,1 @@
+ab -c 10 -n 1000 http://localhost:9090/tickets

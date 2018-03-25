@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
+
 @RestController("/tickets")
 public class RyanairTicketsController {
 
@@ -21,6 +23,7 @@ public class RyanairTicketsController {
                         .uri(path)
                         .retrieve()
                         .bodyToFlux(RyanairTicketDto.class)
+                        .timeout(Duration.ofSeconds(3), Flux.empty())
                 );
     }
 }

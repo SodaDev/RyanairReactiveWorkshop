@@ -1,12 +1,11 @@
 package io.workshop.tickets.rest;
 
 import io.workshop.tickets.model.RyanairTicketDto;
+import org.springframework.cloud.netflix.hystrix.HystrixCommands;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
-
-import java.time.Duration;
 
 @RestController("/tickets")
 public class RyanairTicketsController {
@@ -18,12 +17,16 @@ public class RyanairTicketsController {
     @GetMapping
     public Flux<RyanairTicketDto> loadTickets() {
         return Flux.just("concert", "exhibition", "sport")
-                .flatMap(path -> funtasticClient
-                        .get()
-                        .uri(path)
-                        .retrieve()
-                        .bodyToFlux(RyanairTicketDto.class)
-                        .timeout(Duration.ofSeconds(3), Flux.empty())
+                .flatMap(path -> HystrixCommands.from(funtasticClient
+                                .get()
+                                .uri(path)
+                                .retrieve()
+                                .bodyToFlux(RyanairTicketDto.class)
+                        )
+                        .commandName("tickets" + path)
+                        .groupName("ticketsPool")
+                        .fallback(Flux.empty())
+                        .toFlux()
                 );
     }
 }

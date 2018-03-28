@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "dd002f60-a81e-4ed4-9a41-97ecc9dca463",
+		"name": "Ryanair Workshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ryanair Tickets",
+			"description": "",
+			"item": [
+				{
+					"name": "Tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:9090/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SSE Hystrix stream endpoint - will block on Postman",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:9090/actuator/hystrix.stream",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"actuator",
+								"hystrix.stream"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hystrix Dashboard [run docker first]",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:32770/hystrix-dashboard/monitor/monitor.html?streams=%5B%7B%22name%22%3A%22Tickets%22%2C%22stream%22%3A%22http%3A%2F%2F192.168.0.21%3A9090%2Factuator%2Fhystrix.stream%22%2C%22auth%22%3A%22%22%2C%22delay%22%3A%22%22%7D%5D",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "32770",
+							"path": [
+								"hystrix-dashboard",
+								"monitor",
+								"monitor.html"
+							],
+							"query": [
+								{
+									"key": "streams",
+									"value": "%5B%7B%22name%22%3A%22Tickets%22%2C%22stream%22%3A%22http%3A%2F%2F192.168.0.21%3A9090%2Factuator%2Fhystrix.stream%22%2C%22auth%22%3A%22%22%2C%22delay%22%3A%22%22%7D%5D"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funtastic",
+			"description": "",
+			"item": [
+				{
+					"name": "Funtastic - Sport",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sport"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funtastic - Concert",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/concert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"concert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funtastic - Exhibition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/exhibition",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"exhibition"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

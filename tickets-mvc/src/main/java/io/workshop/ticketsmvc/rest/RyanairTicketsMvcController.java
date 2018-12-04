@@ -37,7 +37,7 @@ public class RyanairTicketsMvcController {
     public DeferredResult<List<RyanairTicketDto>> loadTickets() {
         DeferredResult<List<RyanairTicketDto>> deferredResult = new DeferredResult<>();
         Observable.just("concert", "exhibition", "sport")
-                .flatMap(x -> new TicketsCommand(x).toObservable())
+                .flatMap(x -> new TicketsCommand(x).observe())
                 .flatMapIterable(x -> x)
                 .toList()
                 .subscribe(deferredResult::setResult, deferredResult::setErrorResult);
@@ -67,6 +67,15 @@ public class RyanairTicketsMvcController {
                 .flatMap(Stream::of)
                 .collect(Collectors.toList());
 
+    }
+
+    @GetMapping("/self")
+    public List<RyanairTicketDto> loadTicketsFromAllExposedEndpoints() {
+        return Stream.of("/sync", "/parallel", "")
+                .map(path -> "http://localhost:9090/tickets" + path)
+                .map(this::loadTicketsFromThirdParty)
+                .flatMap(Stream::of)
+                .collect(Collectors.toList());
     }
 
     private RyanairTicketDto[] loadTicketsFromThirdParty(String url) {

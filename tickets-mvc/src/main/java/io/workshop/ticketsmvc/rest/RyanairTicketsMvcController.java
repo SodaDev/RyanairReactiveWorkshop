@@ -1,5 +1,7 @@
 package io.workshop.ticketsmvc.rest;
 
+import com.amazonaws.xray.AWSXRay;
+import com.amazonaws.xray.entities.Entity;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
@@ -48,6 +50,20 @@ public class RyanairTicketsMvcController {
         return Stream.of("concert", "exhibition", "sport")
                 .map(path -> "http://localhost:8080/api/v1/" + path)
                 .map(this::loadTicketsFromThirdParty)
+                .flatMap(Stream::of)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/parallel")
+    public List<RyanairTicketDto> loadTicketsParallel() {
+        Entity traceEntity = AWSXRay.getTraceEntity();
+        return Stream.of("concert", "exhibition", "sport")
+                .map(path -> "http://localhost:8080/api/v1/" + path)
+                .parallel()
+                .map(x -> {
+                    AWSXRay.setTraceEntity(traceEntity);
+                    return loadTicketsFromThirdParty(x);
+                })
                 .flatMap(Stream::of)
                 .collect(Collectors.toList());
     }

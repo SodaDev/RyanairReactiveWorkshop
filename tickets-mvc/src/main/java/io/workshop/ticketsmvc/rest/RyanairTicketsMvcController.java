@@ -11,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 import rx.Observable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +50,7 @@ public class RyanairTicketsMvcController {
     @GetMapping("/sync")
     public List<RyanairTicketDto> loadTicketsSync() {
         return Stream.of("concert", "exhibition", "sport")
-                .map(path -> "http://localhost:8080/api/v1/" + path)
+                .map(path -> "http://funtastic:8080/api/v1/" + path)
                 .map(this::loadTicketsFromThirdParty)
                 .flatMap(Stream::of)
                 .collect(Collectors.toList());
@@ -58,7 +60,7 @@ public class RyanairTicketsMvcController {
     public List<RyanairTicketDto> loadTicketsParallel() {
         Entity traceEntity = AWSXRay.getTraceEntity();
         return Stream.of("concert", "exhibition", "sport")
-                .map(path -> "http://localhost:8080/api/v1/" + path)
+                .map(path -> "http://funtastic:8080/api/v1/" + path)
                 .parallel()
                 .map(x -> {
                     AWSXRay.setTraceEntity(traceEntity);
@@ -72,7 +74,7 @@ public class RyanairTicketsMvcController {
     @GetMapping("/self")
     public List<RyanairTicketDto> loadTicketsFromAllExposedEndpoints() {
         return Stream.of("/sync", "/parallel", "")
-                .map(path -> "http://localhost:9090/tickets" + path)
+                .map(path -> "http://ticketsmvc:9090/tickets" + path)
                 .map(this::loadTicketsFromThirdParty)
                 .flatMap(Stream::of)
                 .collect(Collectors.toList());
@@ -102,7 +104,7 @@ public class RyanairTicketsMvcController {
         @Override
         protected List<RyanairTicketDto> run() {
             AWSXRay.setTraceEntity(entity);
-            return restTemplate.exchange("http://localhost:8080/api/v1/" + path, GET, null, type).getBody();
+            return restTemplate.exchange("http://funtastic:8080/api/v1/" + path, GET, null, type).getBody();
         }
 
         @Override

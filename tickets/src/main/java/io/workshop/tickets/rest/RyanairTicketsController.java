@@ -7,15 +7,17 @@ import com.ryanair.aws.xray.reactive.XRayWebClientFilter;
 import io.workshop.tickets.model.RyanairTicketDto;
 import org.springframework.cloud.netflix.hystrix.HystrixCommands;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-@RestController("/tickets")
+@RestController
+@RequestMapping("/tickets")
 public class RyanairTicketsController {
 
     private final WebClient funtasticClient = WebClient.builder()
-            .baseUrl("http://localhost:8080/api/v1/")
+            .baseUrl("http://funtastic:8080/api/v1/")
             .filter(new XRayWebClientFilter())
             .build();
 

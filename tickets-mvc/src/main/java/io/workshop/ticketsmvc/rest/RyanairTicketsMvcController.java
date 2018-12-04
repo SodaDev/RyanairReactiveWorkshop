@@ -8,18 +8,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 import rx.Observable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.springframework.http.HttpMethod.GET;
 
 @Slf4j
-@RestController("/tickets")
+@RestController
+@RequestMapping(("/tickets"))
 public class RyanairTicketsMvcController {
 
     @Autowired
@@ -36,6 +41,24 @@ public class RyanairTicketsMvcController {
                 .subscribe(deferredResult::setResult, deferredResult::setErrorResult);
 
         return deferredResult;
+    }
+
+    @GetMapping("/sync")
+    public List<RyanairTicketDto> loadTicketsSync() {
+        return Stream.of("concert", "exhibition", "sport")
+                .map(path -> "http://localhost:8080/api/v1/" + path)
+                .map(this::loadTicketsFromThirdParty)
+                .flatMap(Stream::of)
+                .collect(Collectors.toList());
+    }
+
+    private RyanairTicketDto[] loadTicketsFromThirdParty(String url) {
+        try {
+            return restTemplate.getForObject(url, RyanairTicketDto[].class);
+        } catch (RestClientException e) {
+            log.error("Request error occurred", e);
+            return new RyanairTicketDto[]{};
+        }
     }
 
     public class TicketsCommand extends HystrixCommand<List<RyanairTicketDto>> {

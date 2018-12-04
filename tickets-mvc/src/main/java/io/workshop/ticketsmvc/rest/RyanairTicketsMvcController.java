@@ -66,6 +66,7 @@ public class RyanairTicketsMvcController {
                 })
                 .flatMap(Stream::of)
                 .collect(Collectors.toList());
+
     }
 
     private RyanairTicketDto[] loadTicketsFromThirdParty(String url) {
@@ -79,16 +80,19 @@ public class RyanairTicketsMvcController {
 
     public class TicketsCommand extends HystrixCommand<List<RyanairTicketDto>> {
         private final String path;
+        private final Entity entity;
 
         public TicketsCommand(final String path) {
             super(Setter.withGroupKey(
                     HystrixCommandGroupKey.Factory.asKey("ticketsPool"))
                     .andCommandKey(HystrixCommandKey.Factory.asKey("tickets" + path)));
             this.path = path;
+            this.entity = AWSXRay.getTraceEntity();
         }
 
         @Override
         protected List<RyanairTicketDto> run() {
+            AWSXRay.setTraceEntity(entity);
             return restTemplate.exchange("http://localhost:8080/api/v1/" + path, GET, null, type).getBody();
         }
 

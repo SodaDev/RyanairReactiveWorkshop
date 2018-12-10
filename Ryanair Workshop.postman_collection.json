@@ -1,20 +1,23 @@
 {
 	"info": {
-		"_postman_id": "dd002f60-a81e-4ed4-9a41-97ecc9dca463",
 		"name": "Ryanair Workshop",
+		"_postman_id": "d774b232-44f0-4fab-2183-731fff57ffdb",
+		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Ryanair Tickets",
-			"description": "",
 			"item": [
 				{
 					"name": "Tickets",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:9090/tickets",
 							"protocol": "http",
@@ -34,7 +37,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:9090/actuator/hystrix.stream",
 							"protocol": "http",
@@ -55,7 +61,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:32770/hystrix-dashboard/monitor/monitor.html?streams=%5B%7B%22name%22%3A%22Tickets%22%2C%22stream%22%3A%22http%3A%2F%2F192.168.0.21%3A9090%2Factuator%2Fhystrix.stream%22%2C%22auth%22%3A%22%22%2C%22delay%22%3A%22%22%7D%5D",
 							"protocol": "http",
@@ -82,14 +91,16 @@
 		},
 		{
 			"name": "Funtastic",
-			"description": "",
 			"item": [
 				{
 					"name": "Funtastic - Sport",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/sport",
 							"protocol": "http",
@@ -111,7 +122,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/concert",
 							"protocol": "http",
@@ -133,7 +147,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/exhibition",
 							"protocol": "http",
@@ -149,6 +166,389 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "X-Ray Workshop",
+			"description": "",
+			"item": [
+				{
+					"name": "12 - How to setup on Spring MVC",
+					"description": "",
+					"item": [
+						{
+							"name": "Spring MVC Sync",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/tickets/sync",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"tickets",
+										"sync"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Spring MVC Parallel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/tickets/parallel",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"tickets",
+										"parallel"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Spring MVC Observable",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/tickets",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"tickets"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Spring MVC Self call",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/tickets/self",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"tickets",
+										"self"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ff52795e-e624-40ef-bb43-3700ef9260a5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8d49e706-8af2-4c45-a517-a6675fab0c35",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "13 - How to setup on Spring Webflux",
+					"description": "",
+					"item": [
+						{
+							"name": "Spring WebFlux call",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9090/tickets",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9090",
+									"path": [
+										"tickets"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "14 - Ping pong",
+					"description": "",
+					"item": [
+						{
+							"name": "Ping pong",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9091/ping?times=5",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9091",
+									"path": [
+										"ping"
+									],
+									"query": [
+										{
+											"key": "times",
+											"value": "5",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "15 - How to setup AWS SDK",
+					"description": "",
+					"item": [
+						{
+							"name": "Dynamo DB persistence",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9091/dynamo/putItems",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9091",
+									"path": [
+										"dynamo",
+										"putItems"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Dynamo DB persistence broken",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9091/dynamo/putBrokenItems",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9091",
+									"path": [
+										"dynamo",
+										"putBrokenItems"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Dynamo DB scan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9091/dynamo/scan",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9091",
+									"path": [
+										"dynamo",
+										"scan"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "S3 list bucket",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9091/s3",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9091",
+									"path": [
+										"s3"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "S3 list bucket and build gif",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketswebflux:9091/s3/giphy",
+									"host": [
+										"ticketswebflux"
+									],
+									"port": "9091",
+									"path": [
+										"s3",
+										"giphy"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "16 - How to setup SQL",
+					"description": "",
+					"item": [
+						{
+							"name": "Spring MVC JPA insert",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/sql/jpa/add",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"sql",
+										"jpa",
+										"add"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Spring MVC JPA query",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/sql/jpa",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"sql",
+										"jpa"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Spring MVC JDBC insert",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/sql/jdbc/add",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"sql",
+										"jdbc",
+										"add"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Spring MVC JDBC query",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "ticketsmvc:9090/sql/jdbc",
+									"host": [
+										"ticketsmvc"
+									],
+									"port": "9090",
+									"path": [
+										"sql",
+										"jdbc"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		}
